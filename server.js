@@ -29,6 +29,10 @@ app.post('/api/posts', function (req, res, next) {
     // res.send(201);
 });
 
+app.get('/', function (req, res) {
+    res.sendfile('layouts/posts.html');
+});
+
 app.listen(port, function () {
     console.log('Server listening on', port);
 });

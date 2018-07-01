@@ -1,5 +1,6 @@
 1 mongodb
 > mongod -f d:\mongodb\db.conf
+> mongod -f c:\_rfolder\mongodb\db.conf
 
 
 2 nodemon   (p.84)

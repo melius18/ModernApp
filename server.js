@@ -1,5 +1,5 @@
 // bungy01
-var port = 3000;
+var port = 5050;
 var express = require('express');
 var bodyPaser = require('body-parser');
 var Post = require('./models/post');

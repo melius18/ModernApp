@@ -22,16 +22,18 @@ function validateUser(user, password, cb) {
 */
 
 app.post('/session', function (req, res, next) {
-    User.findOne({ username: req.body.username }, function (err, user) {
-        if (err) { return next(err); }
-        if (!user) { return res.send(401); }
-        bcrypt.compare(req.body.password, user.password, function (err, valid) {
+    User.findOne({ username: req.body.username })
+        .select('password')
+        .exec(function (err, user) {
             if (err) { return next(err); }
-            if (!valid) { return res.send(401); }
-            var token = jwt.encode({ username: user.username }, secretKey);
-            res.json(token);
+            if (!user) { return res.send(401); }
+            bcrypt.compare(req.body.password, user.password, function (err, valid) {
+                if (err) { return next(err); }
+                if (!valid) { return res.send(401); }
+                var token = jwt.encode({ username: user.username }, secretKey);
+                res.json(token);
+            });
         });
-    });
 });
 
 app.get('/user', function (req, res) {
@@ -47,14 +49,10 @@ app.post('/user', function (req, res, next) {
     bcrypt.hash(req.body.password, 10, function (err, hash) {
         user.password = hash;
         user.save(function (err, user) {
-            if (err) {
-                throw next(err);
-            }
+            if (err) { throw next(err); }
             res.send(201);
         });
     });
-
-
 });
 
 app.listen(port);

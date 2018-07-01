@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost/auth_demo', function () {
 
 var user = mongoose.Schema({
     username: String,
-    password: { type: String, select: true}
+    password: { type: String, select: false}
 });
 
 module.exports = mongoose.model('User', user);

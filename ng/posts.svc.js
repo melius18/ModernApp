@@ -5,6 +5,8 @@ angular.module('app')
     }
 
     this.create = function (post) {
+        console.error('error!');
         return $http.post('/api/posts', post);
     }
 });
+
